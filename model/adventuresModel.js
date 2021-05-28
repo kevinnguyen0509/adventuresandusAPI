@@ -4,6 +4,7 @@ const adventuresSchema = new mongoose.Schema({
   title: {
     type: String,
     require: [true, "An adventure must have a name."],
+    unique: true,
   },
   description: {
     type: String,
@@ -20,6 +21,10 @@ const adventuresSchema = new mongoose.Schema({
   tag: {
     type: String,
     require: [true, "An adventure must have atleast one tag."],
+  },
+  location: {
+    type: String,
+    default: "unknown",
   },
   createdAt: {
     type: Date,
