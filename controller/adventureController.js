@@ -22,31 +22,26 @@ exports.getAllAdventures = async (req, res) => {
 exports.searchAdventure = async (req, res) => {
   try {
     //$all $in
-    console.log(req.query.location);
-    const searchQuery = ["Restaurant"];
-    const location = "Bellevue";
+    console.log(req.query);
+    const searchQuery = ["food"];
+    const location = req.query.location;
     let searchResult;
     const regex = searchQuery.map(function (e) {
       return new RegExp(e, "i");
     });
 
+    //Search without location. Used for home products
     if (location == null || location.trimEnd() == "") {
       searchResult = await Adventure.find({
         $or: [{ title: { $all: regex } }, { tag: { $in: regex } }],
       }).limit(5000);
     } else {
-      console.log("In else");
-
       searchResult = await Adventure.find({
         $and: [
           { $or: [{ title: { $in: regex } }, { tag: { $in: regex } }] },
           { $or: [{ location: location }] },
+          //TODO: Still needs to ignore caseSensitive for location
         ],
-        // $or: [
-        //   { title: { $all: regex } },
-        //   { tag: { $in: regex } },
-        //   { location: { $in: regex } },
-        // ],
       }).limit(5000);
     }
 
