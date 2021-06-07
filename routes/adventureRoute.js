@@ -6,9 +6,9 @@ const router = express.Router();
 router
   .route("/")
   .get(adventureController.getAllAdventures)
-  .post(adventureController.createAdventure)
-  .delete(adventureController.deleteAdventure);
+  .post(adventureController.createAdventure);
 
+router.route("/search").get(adventureController.searchAdventure);
 router.route("/:tag").get(adventureController.getAdventureCategory);
 
 module.exports = router;

@@ -3,8 +3,9 @@ const Adventure = require("./../model/adventuresModel");
 
 exports.getAllAdventures = async (req, res) => {
   try {
-    let testing = "#homeDecor";
-    const allAdventures = await Adventure.find();
+    console.log(req.query);
+    // location: { $regex: new RegExp("bellevue", "i") },
+    const allAdventures = await Adventure.find().limit(5000).sort({ _id: -1 });
     res.status(200).json({
       result: allAdventures.length,
       status: "Success",
@@ -13,6 +14,50 @@ exports.getAllAdventures = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: "Failed",
+      message: err,
+    });
+  }
+};
+
+exports.searchAdventure = async (req, res) => {
+  try {
+    //$all $in
+    console.log(req.query.location);
+    const searchQuery = ["Restaurant"];
+    const location = "Bellevue";
+    let searchResult;
+    const regex = searchQuery.map(function (e) {
+      return new RegExp(e, "i");
+    });
+
+    if (location == null || location.trimEnd() == "") {
+      searchResult = await Adventure.find({
+        $or: [{ title: { $all: regex } }, { tag: { $in: regex } }],
+      }).limit(5000);
+    } else {
+      console.log("In else");
+
+      searchResult = await Adventure.find({
+        $and: [
+          { $or: [{ title: { $in: regex } }, { tag: { $in: regex } }] },
+          { $or: [{ location: location }] },
+        ],
+        // $or: [
+        //   { title: { $all: regex } },
+        //   { tag: { $in: regex } },
+        //   { location: { $in: regex } },
+        // ],
+      }).limit(5000);
+    }
+
+    res.status(200).json({
+      result: searchResult.length,
+      status: "Success",
+      data: searchResult,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 404,
       message: err,
     });
   }

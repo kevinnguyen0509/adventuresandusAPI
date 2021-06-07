@@ -20,4 +20,5 @@ app.use((req, res, next) => {
 });
 app.use(compression());
 app.use("/api/v1/adventures", adventureRoute);
+
 module.exports = app;
