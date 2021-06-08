@@ -4,7 +4,8 @@ const adventuresSchema = new mongoose.Schema({
   title: {
     type: String,
     require: [true, "An adventure must have a name."],
-    unique: true,
+    maxLength: [50, "The title must be 50 charaters or less."],
+    minLength: [2, "A title must have more than 1 charater"],
   },
   description: {
     type: String,

@@ -22,10 +22,16 @@ exports.getAllAdventures = async (req, res) => {
 exports.searchAdventure = async (req, res) => {
   try {
     //$all $in
-    console.log(req.query);
-    const searchQuery = ["food"];
+
+    const queryString = req.query.search;
+    const querySearchArray = queryString.split(",");
+    console.log(querySearchArray);
+
+    //const searchQuery = ["Restaurant"];
+    const searchQuery = querySearchArray;
     const location = req.query.location;
     let searchResult;
+
     const regex = searchQuery.map(function (e) {
       return new RegExp(e, "i");
     });
@@ -39,10 +45,18 @@ exports.searchAdventure = async (req, res) => {
       searchResult = await Adventure.find({
         $and: [
           { $or: [{ title: { $in: regex } }, { tag: { $in: regex } }] },
-          { $or: [{ location: location }] },
+          {
+            $or: [
+              {
+                location: {
+                  $regex: new RegExp("^" + location.toLowerCase(), "i"),
+                },
+              },
+            ],
+          },
           //TODO: Still needs to ignore caseSensitive for location
         ],
-      }).limit(5000);
+      }).limit(1500);
     }
 
     res.status(200).json({
