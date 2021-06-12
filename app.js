@@ -3,6 +3,7 @@ const app = express();
 const morgan = require("morgan");
 const compression = require("compression");
 const adventureRoute = require("./routes/adventureRoute");
+const userRoute = require("./routes/userRoute");
 const cors = require("cors");
 
 app.use(cors());
@@ -20,5 +21,6 @@ app.use((req, res, next) => {
 });
 app.use(compression());
 app.use("/api/v1/adventures", adventureRoute);
+app.use("/api/v1/users", userRoute);
 
 module.exports = app;
