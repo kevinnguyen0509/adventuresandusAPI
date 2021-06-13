@@ -16,12 +16,16 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
+    console.log(req.query);
+
+    const allUsers = await User.find();
     res.status(200).json({
+      result: allUsers.length,
       status: "Success",
-      message: "Getting all users not implemented",
+      allUsers: allUsers,
     });
   } catch (err) {
-    res.status(404).json({
+    res.status(400).json({
       status: "Failed",
       message: err,
     });

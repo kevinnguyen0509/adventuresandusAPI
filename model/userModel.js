@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 //name, email, photo, password, passwordConfirm, friends: [], boards:[],
 
 const userSchema = new mongoose.Schema({
@@ -25,6 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: [true, "User must have a password"],
     minlength: 4,
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -46,6 +48,25 @@ const userSchema = new mongoose.Schema({
     default: [],
   },
 });
+
+userSchema.pre("save", async function (next) {
+  //Only run if password was modified
+  if (!this.isModified("password")) return next();
+
+  // Has the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+
+  //Delete confirm password
+  this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.methods.correctPassword = async function (
+  canidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(canidatePassword, userPassword);
+};
 
 const User = mongoose.model("User", userSchema);
 
