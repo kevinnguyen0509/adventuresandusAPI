@@ -3,7 +3,6 @@ const Adventure = require("./../model/adventuresModel");
 
 exports.getAllAdventures = async (req, res) => {
   try {
-    console.log(req.query);
     // location: { $regex: new RegExp("bellevue", "i") },
     const allAdventures = await Adventure.find().limit(5000).sort({ _id: -1 });
     res.status(200).json({

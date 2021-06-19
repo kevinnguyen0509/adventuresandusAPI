@@ -1,12 +1,13 @@
 const express = require("express");
 //const Adventure = require("../model/adventuresModel");
 const adventureController = require("./../controller/adventureController");
+const authController = require("./../controller/authController");
 
 const router = express.Router();
 
 router
   .route("/")
-  .get(adventureController.getAllAdventures)
+  .get(authController.protect, adventureController.getAllAdventures)
   .post(adventureController.createAdventure);
 
 router.route("/search").get(adventureController.searchAdventure);
