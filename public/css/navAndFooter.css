@@ -1,0 +1,172 @@
+/***************GENERAL********************/
+img {
+  width: 100%;
+}
+/***************Nav Bar********************/
+body {
+  background-color: #efefef;
+  box-sizing: content-box;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+}
+header {
+  display: flex;
+  flex-direction: row;
+  background: #efefef;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px rgba(100, 100, 111, 0.2);
+}
+
+/***************Nav Bar Components LEFT********************/
+.header__logo,
+.footer__logo {
+  width: 70px;
+}
+/***************Nav Bar Components Middle********************/
+.searchBar_container {
+  display: flex;
+  display: row;
+  align-items: center;
+  width: 50%;
+  transition: box-shadow 0.5s;
+}
+
+#search_one {
+  border-radius: 5px 0px 0px 5px;
+  border-right: 1px solid #efefef;
+}
+
+.search_bar,
+.form_input {
+  padding: 10px;
+  height: 30px;
+  transition: box-shadow 0.5s;
+  width: 100%;
+  border: none;
+  outline: #5b66dc;
+  font-size: 16px;
+}
+
+#search_icon {
+  background-color: #5b66dc;
+  transition: box-shadow 0.5s;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 24px;
+}
+
+#search_icon:hover {
+  transition: box-shadow 0.5s;
+  box-shadow: 3px 3px 5px rgba(100, 100, 111, 0.5);
+}
+
+input:focus,
+input:hover {
+  box-shadow: 5px 5px 10px rgba(100, 100, 111, 0.3);
+  transition: box-shadow 0.5s;
+}
+
+/***************Nav Bar Components RIGHT********************/
+a,
+a:hover,
+a:visited {
+  text-decoration: none;
+  color: #5b66dc;
+}
+
+.nav__el {
+  margin-left: 10px;
+  border: 1px solid #5b66dc;
+  border-radius: 50px;
+  color: #5b66dc;
+  padding: 10px 50px;
+  box-shadow: 5px 5px 10px rgba(100, 100, 111, 0.2);
+}
+
+/***************Nav Bar Components RIGHT__BUTTONS********************/
+#suggest_btn {
+  border: 1px solid rgb(54, 161, 223);
+  color: rgb(54, 161, 223);
+  transition: background-color 1s;
+}
+
+#login_btn,
+#login-button {
+  border: 1px solid #349a77;
+  color: #349a77;
+  transition: background-color 0.7s ease;
+}
+
+#suggest_btn:hover {
+  background: rgb(54, 161, 223);
+  color: #fff;
+  transition: background-color 0.7s ease;
+}
+
+#login_btn:hover,
+#login-button:hover {
+  cursor: pointer;
+  background-color: #349a77;
+  color: #fff;
+
+  transition: background-color 0.7s ease;
+}
+
+#signup_btn {
+  background: #5b66dc;
+  color: #fff;
+}
+
+#login_btn {
+  border: 1px solid #349a77;
+  color: #349a77;
+}
+
+/***************Footer Components********************/
+footer {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 5px;
+  background-color: rgb(78, 75, 75);
+  border-radius: 2px;
+  padding: 5px;
+  box-shadow: 0px -10px 10px rgba(100, 100, 111, 0.2);
+  align-items: center;
+  color: #fff;
+}
+
+/***************Footer Components LEFT********************/
+.footer__logo {
+  display: flex;
+  flex-direction: row;
+}
+.footer__left--container {
+  display: flex;
+}
+
+h3.footer_title {
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+/***************Footer Components RIGHT********************/
+.footer__right--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ul.footer__nav {
+  display: flex;
+
+  list-style-type: none;
+}
+
+ul li {
+  margin-right: 5px;
+}

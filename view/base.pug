@@ -1,0 +1,24 @@
+doctype html 
+html 
+    head 
+        title SwipeGestion | #{title}
+    
+
+
+        link(rel='stylesheet' href="css/navAndFooter.css")
+        link(rel="stylesheet", href="css/font/flaticon.css")
+        link(rel='stylesheet', href='css/layout.css')
+        
+        <link rel="icon" href="img/favicon.png" type="image/icon type">
+    body
+        // Header
+        include header/header 
+
+        //content
+        block content
+        include body/login
+
+        // Footer
+        include footer/footer
+
+        

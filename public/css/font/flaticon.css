@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "flaticon";
+    src: url("./flaticon.ttf?c4251d2b8f6d997470a553b542d3607e") format("truetype"),
+url("./flaticon.woff?c4251d2b8f6d997470a553b542d3607e") format("woff"),
+url("./flaticon.woff2?c4251d2b8f6d997470a553b542d3607e") format("woff2"),
+url("./flaticon.eot?c4251d2b8f6d997470a553b542d3607e#iefix") format("embedded-opentype"),
+url("./flaticon.svg?c4251d2b8f6d997470a553b542d3607e#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-cancel:before {
+    content: "\f101";
+}
+.flaticon-recipe-book:before {
+    content: "\f102";
+}
+.flaticon-information:before {
+    content: "\f103";
+}
+.flaticon-add:before {
+    content: "\f104";
+}
+.flaticon-right-arrow:before {
+    content: "\f105";
+}
+.flaticon-browsing:before {
+    content: "\f106";
+}
+.flaticon-relax:before {
+    content: "\f107";
+}
+.flaticon-car:before {
+    content: "\f108";
+}
+.flaticon-hiking:before {
+    content: "\f109";
+}
+.flaticon-fork:before {
+    content: "\f10a";
+}
+.flaticon-loupe:before {
+    content: "\f10b";
+}
+.flaticon-user:before {
+    content: "\f10c";
+}
+.flaticon-lock:before {
+    content: "\f10d";
+}

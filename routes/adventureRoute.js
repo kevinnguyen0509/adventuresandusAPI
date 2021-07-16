@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(authController.protect, adventureController.getAllAdventures)
+  .get(adventureController.getAllAdventures)
   .post(adventureController.createAdventure);
 
 router.route("/search").get(adventureController.searchAdventure);
