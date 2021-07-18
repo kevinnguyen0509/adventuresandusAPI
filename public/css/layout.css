@@ -140,3 +140,19 @@ form {
   font-size: 500%;
   padding: 10px 20px;
 }
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #5b66dc;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #5b66dc;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #5b66dc;
+}

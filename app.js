@@ -9,15 +9,27 @@ const userRoute = require("./routes/userRoute");
 const boardRoute = require("./routes/boardRoute");
 const viewRoute = require("./routes/viewRoutes");
 const cors = require("cors");
-
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require("xss-clean");
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "view"));
 
 app.use(express.static(path.join(__dirname, "public")));
 //Set Security HTTP Headers
 app.use(helmet());
-const mongoSanitize = require("express-mongo-sanitize");
-const xss = require("xss-clean");
+app.use(
+  expressCspHeader({
+    directives: {
+      "default-src": [SELF],
+      "script-src": [SELF, INLINE, "somehost.com"],
+      "style-src": [SELF, "mystyles.net"],
+      "img-src": ["data:", "*"],
+      "worker-src": [NONE],
+      "block-all-mixed-content": true,
+    },
+  })
+);
 app.use(cors());
 
 // Development logging

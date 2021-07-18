@@ -1,4 +1,16 @@
 extends base
 
-block content 
-    h1 This is now the adventures page
+block content
+    .container 
+        .content-section
+            .content-section-top 
+                h3 LEFT And RIGHT Keys To Swipe!
+            .content-section-bottom
+                .content-section-left 
+                    p left side
+                .content-section-right
+                    p right side
+                
+//-each adventure in adventures
+
+    //- img(src=`${adventure.image}`)
