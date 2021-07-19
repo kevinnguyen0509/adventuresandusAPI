@@ -140,6 +140,39 @@ form {
   font-size: 500%;
   padding: 10px 20px;
 }
+.action-buttons {
+  cursor: pointer;
+  margin: 10px 20px;
+  font-size: 36px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  box-shadow: 5px 5px 10px rgba(100, 100, 111, 0.5);
+}
+
+.flaticon-redo-arrow-symbol {
+  font-size: 20px;
+  width: 15px;
+  height: 15px;
+  color: #f5cf75;
+}
+.flaticon-cross-sign {
+  color: red;
+  font-weight: bold;
+}
+.flaticon-add {
+  color: #349a76;
+}
+.flaticon-information {
+  font-size: 20px;
+  width: 15px;
+  height: 15px;
+  color: rgb(54, 161, 223);
+}
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */

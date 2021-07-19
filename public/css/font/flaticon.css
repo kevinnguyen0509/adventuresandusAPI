@@ -1,10 +1,10 @@
 @font-face {
     font-family: "flaticon";
-    src: url("./flaticon.ttf?c4251d2b8f6d997470a553b542d3607e") format("truetype"),
-url("./flaticon.woff?c4251d2b8f6d997470a553b542d3607e") format("woff"),
-url("./flaticon.woff2?c4251d2b8f6d997470a553b542d3607e") format("woff2"),
-url("./flaticon.eot?c4251d2b8f6d997470a553b542d3607e#iefix") format("embedded-opentype"),
-url("./flaticon.svg?c4251d2b8f6d997470a553b542d3607e#flaticon") format("svg");
+    src: url("./flaticon.ttf?b693852afd8726dd5496b63c5b702998") format("truetype"),
+url("./flaticon.woff?b693852afd8726dd5496b63c5b702998") format("woff"),
+url("./flaticon.woff2?b693852afd8726dd5496b63c5b702998") format("woff2"),
+url("./flaticon.eot?b693852afd8726dd5496b63c5b702998#iefix") format("embedded-opentype"),
+url("./flaticon.svg?b693852afd8726dd5496b63c5b702998#flaticon") format("svg");
 }
 
 i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
@@ -56,4 +56,10 @@ i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
 }
 .flaticon-lock:before {
     content: "\f10d";
+}
+.flaticon-redo-arrow-symbol:before {
+    content: "\f10e";
+}
+.flaticon-cross-sign:before {
+    content: "\f10f";
 }
