@@ -169,9 +169,9 @@ li i {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-
   width: 100%;
   padding: 0px 10px;
+  margin-top: 10px;
 }
 h5.subTitle,
 h3.title {

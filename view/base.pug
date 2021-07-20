@@ -2,6 +2,7 @@ doctype html
 html 
     head 
         title SwipeGestion | #{title}
+        <meta http-equiv="Content-Security-Policy: script-src 'self' https://hidden-spire-05318.herokuapp.com/api/v1/adventures">
     
 
 
@@ -9,6 +10,7 @@ html
         link(rel="stylesheet", href="css/font/flaticon.css")
         link(rel='stylesheet', href='css/layout.css')
         link(rel='stylesheet', href='css/adventures.css')
+        link(rel='stylesheet', href='css/utils/loading.css')
         
         <link rel="icon" href="img/favicon.png" type="image/icon type">
     body
@@ -24,5 +26,7 @@ html
 
         // Footer
         include footer/footer
+
+    script(src='/js/adventures/landingPageAdventures.js')
 
         
