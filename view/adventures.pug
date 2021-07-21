@@ -44,7 +44,7 @@ block content
                         include util/loading 
                         //loading bar
                         .bottom-content#bottom-content
-                            .bottom-content-container 
+                            .bottom-content-container#card 
                                 .image-content-container
                                     img(src="img/assets/livingroom.jpg" class="right-content-image") 
                                 .blur-title   
@@ -52,12 +52,13 @@ block content
                                     h5.subTitle Home/Decor
 
                             .button-container 
-                                <i class="flaticon-redo-arrow-symbol action-buttons"></i> 
-                                <i class="flaticon-cross-sign action-buttons"></i> 
-                                <i class="flaticon-add action-buttons"></i> 
-                                <i class="flaticon-information action-buttons"></i> 
+                                <i class="flaticon-redo-arrow-symbol action-buttons" id="redo-button"></i> 
+                                <i class="flaticon-cross-sign action-buttons" id="next-button"></i> 
+                                <i class="flaticon-add action-buttons" id="add-button"></i> 
+                                #info-button-container
+                                    <i class="flaticon-information action-buttons" id="info-button"></i> 
                         
-                                    
+
                 
 //-each adventure in adventures
 
