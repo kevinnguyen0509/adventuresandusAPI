@@ -1,6 +1,7 @@
 const loadingImage = document.getElementById("loadingScreen");
 const bottomContent = document.getElementById("bottom-content");
-const card = document.getElementById("card");
+const cardContainer = document.getElementById("bottom-content");
+
 const addButton = document.getElementById("add-button");
 const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
@@ -14,15 +15,23 @@ getAdventures().then((data) => {
   adventuresArray = shuffle(data.adventures);
   currentIndex = 0;
 
-  //Creates first card
-  createCard(adventuresArray, currentIndex);
-  createInfoUrl(adventuresArray, currentIndex);
+  //Creates card deck of 10
+  for (let i = 0; i < 200; i++) {
+    createCard(adventuresArray, i);
+    //createInfoUrl(adventuresArray, currentIndex);
+  }
+  document.getElementById("card" + currentIndex).classList.remove("hidden");
 
   //Listeners Start Here for clicks
   addButton.addEventListener("click", function () {
-    currentIndex++;
-    rightSwipe(adventuresArray, currentIndex);
+    document
+      .getElementById("card" + (currentIndex + 1))
+      .classList.remove("hidden");
+
+    let card = document.getElementById("card" + currentIndex);
+    rightSwipe(adventuresArray, currentIndex, card);
     createInfoUrl(adventuresArray, currentIndex);
+    currentIndex++;
   });
 
   nextButton.addEventListener("click", function () {
@@ -43,16 +52,19 @@ getAdventures().then((data) => {
 });
 
 /**************Functions*****************/
-function rightSwipe(adventuresArray, currentIndex) {
-  createCard(adventuresArray, currentIndex);
+function rightSwipe(adventuresArray, currentIndex, card) {
+  console.log(currentIndex);
+  card.classList.add("slideRightAnim");
+
+  //createCard(adventuresArray, currentIndex);
 }
 
 function leftSwipe(adventuresArray, currentIndex) {
-  createCard(adventuresArray, currentIndex);
+  //createCard(adventuresArray, currentIndex);
 }
 
 function redoSwipe(adventuresArray, currentIndex) {
-  createCard(adventuresArray, currentIndex);
+  //createCard(adventuresArray, currentIndex);
 }
 
 async function getAdventures() {
@@ -79,7 +91,10 @@ function startLoading() {
 
 /**************Helper Methods*****************/
 function createCard(adventuresArray, currentIndex) {
-  card.innerHTML = `
+  cardContainer.insertAdjacentHTML(
+    "afterbegin",
+    `
+  <div class ="bottom-content-container hidden"  id="card${currentIndex}">
   <div class="image-content-container">
       <a href="${adventuresArray[currentIndex].url}" target="_blank">
         <img src="${adventuresArray[currentIndex].image}" class="right-content-image" />
@@ -94,7 +109,8 @@ function createCard(adventuresArray, currentIndex) {
 
   
   
-  `;
+  `
+  );
 }
 
 function createInfoUrl(adventuresArray, currentIndex) {

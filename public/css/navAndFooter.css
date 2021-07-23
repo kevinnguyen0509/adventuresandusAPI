@@ -10,6 +10,7 @@ body {
   height: 100%;
   margin: 0px;
   color: #5b66dc;
+  overflow-x: hidden;
 }
 header {
   display: flex;

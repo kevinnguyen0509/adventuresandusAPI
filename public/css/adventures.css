@@ -144,8 +144,8 @@ li i {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 15px;
 
+  position: relative;
   height: 70.5vh;
 }
 
@@ -154,6 +154,9 @@ li i {
   width: 60%;
   box-shadow: 2px 2px 10px rgba(100, 100, 111, 0.5);
   margin-bottom: 20px;
+  border-radius: 0px 0px 5px 5px;
+  position: absolute;
+  top: 15px;
 }
 
 .image-content-container {
@@ -164,6 +167,7 @@ li i {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .blur-title {
@@ -188,4 +192,55 @@ h3.title {
   align-items: center;
   width: 60%;
   height: 80px;
+  position: absolute;
+  bottom: 0;
+}
+.slideRightAnim {
+  animation-name: slideright;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+#card0 {
+  z-index: 10;
+}
+#card1 {
+  z-index: 2;
+}
+
+.hidden {
+  visibility: hidden;
+}
+@keyframes slideright {
+  0% {
+    margin-left: 0px;
+    opacity: 1;
+  }
+  50% {
+    margin-left: 1200px;
+    opacity: 1;
+  }
+  99% {
+    margin-left: 600px;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 2200px;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    margin-left: 0px;
+    opacity: 1;
+  }
+  50% {
+    margin-left: -600px;
+    opacity: 1;
+    z-index: -2;
+  }
+  100% {
+    margin-right: 600px;
+    opacity: 0;
+  }
 }
