@@ -55,6 +55,9 @@ getAdventures().then((data) => {
 function rightSwipe(adventuresArray, currentIndex, card) {
   console.log(currentIndex);
   card.classList.add("slideRightAnim");
+  setTimeout(function () {
+    card.remove();
+  }, 500);
 
   //createCard(adventuresArray, currentIndex);
 }
