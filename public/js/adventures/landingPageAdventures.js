@@ -7,6 +7,8 @@ const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
 const infoButton = document.getElementById("info-button-container");
 let currentIndex;
+let maxIndex = 5;
+let tempEndDeck = maxIndex;
 let adventuresArray = [];
 startLoading();
 
@@ -16,22 +18,45 @@ getAdventures().then((data) => {
   currentIndex = 0;
 
   //Creates card deck of 10
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < maxIndex; i++) {
     createCard(adventuresArray, i);
     //createInfoUrl(adventuresArray, currentIndex);
   }
+
   document.getElementById("card" + currentIndex).classList.remove("hidden");
 
   //Listeners Start Here for clicks
   addButton.addEventListener("click", function () {
-    document
-      .getElementById("card" + (currentIndex + 1))
-      .classList.remove("hidden");
+    console.log("Current Index On Click: " + currentIndex);
 
-    let card = document.getElementById("card" + currentIndex);
-    rightSwipe(adventuresArray, currentIndex, card);
-    createInfoUrl(adventuresArray, currentIndex);
-    currentIndex++;
+    if (currentIndex == maxIndex - 1) {
+      maxIndex = maxIndex + 5;
+
+      for (let i = currentIndex + 1; i < maxIndex; i++) {
+        createCard(adventuresArray, i);
+        //createInfoUrl(adventuresArray, currentIndex);
+      }
+      console.log("current index after new deck: " + currentIndex);
+      document
+        .getElementById("card" + (currentIndex + 1))
+        .classList.remove("hidden");
+
+      let endingcard = document.getElementById("card" + currentIndex);
+      console.log(endingcard);
+      rightSwipe(adventuresArray, currentIndex, endingcard);
+      //createInfoUrl(adventuresArray, currentIndex);
+      currentIndex++;
+    } else {
+      document
+        .getElementById("card" + (currentIndex + 1))
+        .classList.remove("hidden");
+
+      let card = document.getElementById("card" + currentIndex);
+      rightSwipe(adventuresArray, currentIndex, card);
+      createInfoUrl(adventuresArray, currentIndex);
+      currentIndex++;
+      console.log(currentIndex);
+    }
   });
 
   nextButton.addEventListener("click", function () {
@@ -53,11 +78,21 @@ getAdventures().then((data) => {
 
 /**************Functions*****************/
 function rightSwipe(adventuresArray, currentIndex, card) {
-  console.log(currentIndex);
-  card.classList.add("slideRightAnim");
-  setTimeout(function () {
-    card.remove();
-  }, 500);
+  console.log("currentIndex: " + currentIndex, "tempDeck:" + tempEndDeck);
+  if (currentIndex === tempEndDeck - 1) {
+    console.log(card);
+
+    card.classList.add("slideRightAnim");
+    setTimeout(function () {
+      card.remove();
+    }, 500);
+    tempEndDeck = maxIndex;
+  } else {
+    card.classList.add("slideRightAnim");
+    setTimeout(function () {
+      card.remove();
+    }, 500);
+  }
 
   //createCard(adventuresArray, currentIndex);
 }
