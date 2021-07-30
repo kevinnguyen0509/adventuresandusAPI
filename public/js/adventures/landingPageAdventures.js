@@ -1,13 +1,13 @@
 const loadingImage = document.getElementById("loadingScreen");
 const bottomContent = document.getElementById("bottom-content");
 const cardContainer = document.getElementById("bottom-content");
-
+const recentlyAdded = document.getElementById("recentlyAddedContainer");
 const addButton = document.getElementById("add-button");
 const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
 const infoButton = document.getElementById("info-button-container");
-let currentIndex;
-let maxIndex = 5;
+let currentIndex = 0;
+let maxIndex = 10;
 let tempEndDeck = maxIndex;
 let adventuresArray = [];
 startLoading();
@@ -15,59 +15,91 @@ startLoading();
 getAdventures().then((data) => {
   finishLoading();
   adventuresArray = shuffle(data.adventures);
-  currentIndex = 0;
 
   //Creates card deck of 10
-  for (let i = 0; i < maxIndex; i++) {
-    createCard(adventuresArray, i);
-    //createInfoUrl(adventuresArray, currentIndex);
-  }
-
-  document.getElementById("card" + currentIndex).classList.remove("hidden");
+  createInitialDeck(adventuresArray);
 
   //Listeners Start Here for clicks
   addButton.addEventListener("click", function () {
-    console.log("Current Index On Click: " + currentIndex);
-
     if (currentIndex == maxIndex - 1) {
-      maxIndex = maxIndex + 5;
+      recentlyAdded.insertAdjacentHTML(
+        "afterbegin",
+        `
+        <div class="recently-added-img-container">
+        <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></div>`
+      );
 
+      maxIndex = maxIndex + 100;
+
+      //Creates new deck
       for (let i = currentIndex + 1; i < maxIndex; i++) {
         createCard(adventuresArray, i);
-        //createInfoUrl(adventuresArray, currentIndex);
       }
-      console.log("current index after new deck: " + currentIndex);
+
       document
         .getElementById("card" + (currentIndex + 1))
         .classList.remove("hidden");
 
+      //Tells program it's the end of the deck and swipes the last card away
       let endingcard = document.getElementById("card" + currentIndex);
-      console.log(endingcard);
       rightSwipe(adventuresArray, currentIndex, endingcard);
-      //createInfoUrl(adventuresArray, currentIndex);
-      currentIndex++;
+
+      currentIndex++; //Next item in deck
     } else {
       document
         .getElementById("card" + (currentIndex + 1))
         .classList.remove("hidden");
 
       let card = document.getElementById("card" + currentIndex);
+      recentlyAdded.insertAdjacentHTML(
+        "afterbegin",
+        `
+        <div class="recently-added-img-container">
+        <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></div>`
+      );
       rightSwipe(adventuresArray, currentIndex, card);
       createInfoUrl(adventuresArray, currentIndex);
+
       currentIndex++;
-      console.log(currentIndex);
     }
   });
 
   nextButton.addEventListener("click", function () {
-    currentIndex++;
-    leftSwipe(adventuresArray, currentIndex);
-    createInfoUrl(adventuresArray, currentIndex);
+    //If it's the last card in the deck grab more from memory
+    if (currentIndex == maxIndex - 1) {
+      maxIndex = maxIndex + 100;
+
+      //Creates new deck
+      for (let i = currentIndex + 1; i < maxIndex; i++) {
+        createCard(adventuresArray, i);
+      }
+
+      document
+        .getElementById("card" + (currentIndex + 1))
+        .classList.remove("hidden");
+
+      //Tells program it's the end of the deck and swipes the last card away
+      let endingcard = document.getElementById("card" + currentIndex);
+      rightSwipe(adventuresArray, currentIndex, endingcard);
+
+      currentIndex++; //Next item in deck
+    } else {
+      document
+        .getElementById("card" + (currentIndex + 1))
+        .classList.remove("hidden");
+
+      let card = document.getElementById("card" + currentIndex);
+      leftSwipe(adventuresArray, currentIndex, card);
+      createInfoUrl(adventuresArray, currentIndex);
+
+      currentIndex++;
+    }
   });
 
   redoButton.addEventListener("click", function () {
     if (currentIndex == 0) {
       currentIndex = 0;
+      console.log(currentIndex);
     } else {
       currentIndex--;
       redoSwipe(adventuresArray, currentIndex);
@@ -78,32 +110,35 @@ getAdventures().then((data) => {
 
 /**************Functions*****************/
 function rightSwipe(adventuresArray, currentIndex, card) {
-  console.log("currentIndex: " + currentIndex, "tempDeck:" + tempEndDeck);
   if (currentIndex === tempEndDeck - 1) {
-    console.log(card);
-
     card.classList.add("slideRightAnim");
-    setTimeout(function () {
-      card.remove();
-    }, 500);
-    tempEndDeck = maxIndex;
+
+    //Wait for animation
+    removeCard(card, 500);
+    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
   } else {
     card.classList.add("slideRightAnim");
     setTimeout(function () {
       card.remove();
     }, 500);
   }
-
-  //createCard(adventuresArray, currentIndex);
 }
 
-function leftSwipe(adventuresArray, currentIndex) {
-  //createCard(adventuresArray, currentIndex);
+function leftSwipe(adventuresArray, currentIndex, card) {
+  if (currentIndex === tempEndDeck - 1) {
+    card.classList.add("slideLeftAnim");
+    //Wait for animation
+    removeCard(card, 500);
+    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
+  } else {
+    card.classList.add("slideLeftAnim");
+    setTimeout(function () {
+      card.remove();
+    }, 500);
+  }
 }
 
-function redoSwipe(adventuresArray, currentIndex) {
-  //createCard(adventuresArray, currentIndex);
-}
+function redoSwipe(adventuresArray, currentIndex) {}
 
 async function getAdventures() {
   const api = "/api/v1/adventures";
@@ -142,7 +177,7 @@ function createCard(adventuresArray, currentIndex) {
     <a href="${adventuresArray[currentIndex].url}" target="_blank">
       <h3 class="title">${adventuresArray[currentIndex].title} </h3>
     </a>
-      <h5 class="subTitle">${adventuresArray[currentIndex].location}</h5>
+      <h5 class="subTitle">Location: ${adventuresArray[currentIndex].location}</h5>
   </div>
 
   
@@ -153,7 +188,24 @@ function createCard(adventuresArray, currentIndex) {
 
 function createInfoUrl(adventuresArray, currentIndex) {
   infoButton.innerHTML = `
-  <a href="${adventuresArray[currentIndex].url}" target="_blank"><i   class="flaticon-information action-buttons" id="info-button"></i> 
+  <a href="${
+    adventuresArray[currentIndex + 1].url
+  }" target="_blank"><i   class="flaticon-information action-buttons" id="info-button"></i> 
   </a>
   `;
+}
+
+function createInitialDeck(adventuresArray) {
+  for (let i = 0; i < maxIndex; i++) {
+    createCard(adventuresArray, i);
+  }
+
+  document.getElementById("card" + currentIndex).classList.remove("hidden");
+  createInfoUrl(adventuresArray, currentIndex - 1);
+}
+
+function removeCard(card, timeInMIliseconds) {
+  setTimeout(function () {
+    card.remove();
+  }, timeInMIliseconds);
 }

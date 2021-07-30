@@ -195,8 +195,52 @@ h3.title {
   position: absolute;
   bottom: 0;
 }
+#recently-added-title {
+  position: relative;
+}
+#recently-added-title::after {
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 5px;
+  background-color: #5b66dc;
+  content: "";
+  top: 50px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.recentlyAddedContainer {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  height: 420px;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0px;
+}
+.recently-added-img-container {
+  width: 48%;
+  height: 150px;
+  margin: 2px 2px;
+}
+.recently-added-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+}
 .slideRightAnim {
   animation-name: slideright;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.slideLeftAnim {
+  animation-name: slideLeft;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
@@ -219,6 +263,7 @@ h3.title {
   }
   100% {
     margin-left: 2200px;
+    opacity: 0;
   }
 }
 
@@ -228,12 +273,29 @@ h3.title {
     opacity: 1;
   }
   50% {
-    margin-left: -600px;
+    margin-left: -1200px;
     opacity: 1;
-    z-index: -2;
   }
-  100% {
-    margin-right: 600px;
+  99% {
+    margin-left: -600px;
     opacity: 0;
   }
+  100% {
+    margin-left: -2200px;
+    opacity: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #5b66dc;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px #5b66dc;
 }
