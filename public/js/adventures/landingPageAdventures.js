@@ -6,6 +6,18 @@ const addButton = document.getElementById("add-button");
 const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
 const infoButton = document.getElementById("info-button-container");
+
+const rightSwipeText = document.getElementById(
+  "swipeFeedBackMessageContainerRight"
+);
+
+const leftSwipeText = document.getElementById(
+  "swipeFeedBackMessageContainerLeft"
+);
+
+const centerSwipeText = document.getElementById(
+  "swipeFeedBackMessageContainerCenter"
+);
 let currentIndex = 0;
 let maxIndex = 10;
 let tempEndDeck = maxIndex;
@@ -13,7 +25,7 @@ let adventuresArray = [];
 startLoading();
 
 getAdventures().then((data) => {
-  finishLoading();
+  finishLoading(rightSwipeText);
   adventuresArray = shuffle(data.adventures);
 
   //Creates card deck of 10
@@ -21,6 +33,7 @@ getAdventures().then((data) => {
 
   //Listeners Start Here for clicks
   addButton.addEventListener("click", function () {
+    showFeedMessage(rightSwipeText);
     if (currentIndex == maxIndex - 1) {
       recentlyAdded.insertAdjacentHTML(
         "afterbegin",
@@ -55,7 +68,8 @@ getAdventures().then((data) => {
         "afterbegin",
         `
         <div class="recently-added-img-container">
-        <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></div>`
+        <a href="${adventuresArray[currentIndex].url}" target="_blank">
+        <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></a></div>`
       );
       rightSwipe(adventuresArray, currentIndex, card);
       createInfoUrl(adventuresArray, currentIndex);
@@ -64,7 +78,27 @@ getAdventures().then((data) => {
     }
   });
 
+  redoButton.addEventListener("click", function () {
+    showFeedMessage(centerSwipeText);
+    if (currentIndex == 0) {
+      currentIndex = 0;
+      console.log(currentIndex);
+    } else {
+      currentIndex--;
+      document
+        .getElementById("card" + (currentIndex + 1))
+        .classList.add("hidden");
+
+      createRedoCard(adventuresArray, currentIndex);
+      createInfoUrl(adventuresArray, currentIndex - 1);
+
+      document.getElementById("card" + currentIndex).classList.remove("hidden");
+    }
+  });
+
   nextButton.addEventListener("click", function () {
+    showFeedMessage(leftSwipeText);
+
     //If it's the last card in the deck grab more from memory
     if (currentIndex == maxIndex - 1) {
       maxIndex = maxIndex + 100;
@@ -96,49 +130,36 @@ getAdventures().then((data) => {
     }
   });
 
-  redoButton.addEventListener("click", function () {
-    if (currentIndex == 0) {
-      currentIndex = 0;
-      console.log(currentIndex);
+  /**************Functions*****************/
+  function rightSwipe(adventuresArray, currentIndex, card) {
+    if (currentIndex === tempEndDeck - 1) {
+      card.classList.add("slideRightAnim");
+
+      //Wait for animation
+      removeCard(card, 500);
+      tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
     } else {
-      currentIndex--;
-      redoSwipe(adventuresArray, currentIndex);
-      createInfoUrl(adventuresArray, currentIndex);
+      card.classList.add("slideRightAnim");
+      setTimeout(function () {
+        card.remove();
+      }, 500);
     }
-  });
+  }
+
+  function leftSwipe(adventuresArray, currentIndex, card) {
+    if (currentIndex === tempEndDeck - 1) {
+      card.classList.add("slideLeftAnim");
+      //Wait for animation
+      removeCard(card, 500);
+      tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
+    } else {
+      card.classList.add("slideLeftAnim");
+      setTimeout(function () {
+        card.remove();
+      }, 500);
+    }
+  }
 });
-
-/**************Functions*****************/
-function rightSwipe(adventuresArray, currentIndex, card) {
-  if (currentIndex === tempEndDeck - 1) {
-    card.classList.add("slideRightAnim");
-
-    //Wait for animation
-    removeCard(card, 500);
-    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
-  } else {
-    card.classList.add("slideRightAnim");
-    setTimeout(function () {
-      card.remove();
-    }, 500);
-  }
-}
-
-function leftSwipe(adventuresArray, currentIndex, card) {
-  if (currentIndex === tempEndDeck - 1) {
-    card.classList.add("slideLeftAnim");
-    //Wait for animation
-    removeCard(card, 500);
-    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
-  } else {
-    card.classList.add("slideLeftAnim");
-    setTimeout(function () {
-      card.remove();
-    }, 500);
-  }
-}
-
-function redoSwipe(adventuresArray, currentIndex) {}
 
 async function getAdventures() {
   const api = "/api/v1/adventures";
@@ -179,6 +200,26 @@ function createCard(adventuresArray, currentIndex) {
     </a>
       <h5 class="subTitle">Location: ${adventuresArray[currentIndex].location}</h5>
   </div>
+  `
+  );
+}
+
+function createRedoCard(adventuresArray, currentIndex) {
+  cardContainer.insertAdjacentHTML(
+    "beforeEnd",
+    `
+  <div class ="bottom-content-container slideUpAnim"  id="card${currentIndex}">
+  <div class="image-content-container">
+      <a href="${adventuresArray[currentIndex].url}" target="_blank">
+        <img src="${adventuresArray[currentIndex].image}" class="right-content-image" />
+      </a>
+  </div>
+  <div class="blur-title ">
+    <a href="${adventuresArray[currentIndex].url}" target="_blank">
+      <h3 class="title">${adventuresArray[currentIndex].title} </h3>
+    </a>
+      <h5 class="subTitle">Location: ${adventuresArray[currentIndex].location}</h5>
+  </div>
 
   
   
@@ -208,4 +249,11 @@ function removeCard(card, timeInMIliseconds) {
   setTimeout(function () {
     card.remove();
   }, timeInMIliseconds);
+}
+
+function showFeedMessage(feedBackContainer) {
+  feedBackContainer.classList.add("fadeIn");
+  setTimeout(function () {
+    feedBackContainer.classList.remove("fadeIn");
+  }, 750);
 }
