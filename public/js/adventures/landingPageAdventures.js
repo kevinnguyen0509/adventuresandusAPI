@@ -7,6 +7,8 @@ const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
 const infoButton = document.getElementById("info-button-container");
 
+const resturantLink = document.getElementById("Restaurants");
+
 const rightSwipeText = document.getElementById(
   "swipeFeedBackMessageContainerRight"
 );
@@ -24,7 +26,7 @@ let tempEndDeck = maxIndex;
 let adventuresArray = [];
 startLoading();
 
-getAdventures().then((data) => {
+getAdventures("adventures").then((data) => {
   finishLoading(rightSwipeText);
   adventuresArray = shuffle(data.adventures);
 
@@ -130,39 +132,148 @@ getAdventures().then((data) => {
     }
   });
 
-  /**************Functions*****************/
-  function rightSwipe(adventuresArray, currentIndex, card) {
-    if (currentIndex === tempEndDeck - 1) {
-      card.classList.add("slideRightAnim");
+  /******************KeyBoard bindings******************** */
+  document.addEventListener("keydown", function (e) {
+    if (e.keyCode == "39") {
+      //Right Swipe
+      showFeedMessage(rightSwipeText);
+      if (currentIndex == maxIndex - 1) {
+        recentlyAdded.insertAdjacentHTML(
+          "afterbegin",
+          `
+          <div class="recently-added-img-container">
+          <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></div>`
+        );
 
-      //Wait for animation
-      removeCard(card, 500);
-      tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
-    } else {
-      card.classList.add("slideRightAnim");
-      setTimeout(function () {
-        card.remove();
-      }, 500);
+        maxIndex = maxIndex + 100;
+
+        //Creates new deck
+        for (let i = currentIndex + 1; i < maxIndex; i++) {
+          createCard(adventuresArray, i);
+        }
+
+        document
+          .getElementById("card" + (currentIndex + 1))
+          .classList.remove("hidden");
+
+        //Tells program it's the end of the deck and swipes the last card away
+        let endingcard = document.getElementById("card" + currentIndex);
+        rightSwipe(adventuresArray, currentIndex, endingcard);
+
+        currentIndex++; //Next item in deck
+      } else {
+        document
+          .getElementById("card" + (currentIndex + 1))
+          .classList.remove("hidden");
+
+        let card = document.getElementById("card" + currentIndex);
+        recentlyAdded.insertAdjacentHTML(
+          "afterbegin",
+          `
+          <div class="recently-added-img-container">
+          <a href="${adventuresArray[currentIndex].url}" target="_blank">
+          <img src="${adventuresArray[currentIndex].image}" class="recently-added-image"></a></div>`
+        );
+        rightSwipe(adventuresArray, currentIndex, card);
+        createInfoUrl(adventuresArray, currentIndex);
+
+        currentIndex++;
+      }
+    } else if (e.keyCode == "37") {
+      //Left
+      showFeedMessage(leftSwipeText);
+
+      //If it's the last card in the deck grab more from memory
+      if (currentIndex == maxIndex - 1) {
+        maxIndex = maxIndex + 100;
+
+        //Creates new deck
+        for (let i = currentIndex + 1; i < maxIndex; i++) {
+          createCard(adventuresArray, i);
+        }
+
+        document
+          .getElementById("card" + (currentIndex + 1))
+          .classList.remove("hidden");
+
+        //Tells program it's the end of the deck and swipes the last card away
+        let endingcard = document.getElementById("card" + currentIndex);
+        rightSwipe(adventuresArray, currentIndex, endingcard);
+
+        currentIndex++; //Next item in deck
+      } else {
+        document
+          .getElementById("card" + (currentIndex + 1))
+          .classList.remove("hidden");
+
+        let card = document.getElementById("card" + currentIndex);
+        leftSwipe(adventuresArray, currentIndex, card);
+        createInfoUrl(adventuresArray, currentIndex);
+
+        currentIndex++;
+      }
+    } else if (e.keyCode == "40") {
+      //Redo
+      showFeedMessage(centerSwipeText);
+      if (currentIndex == 0) {
+        currentIndex = 0;
+        console.log(currentIndex);
+      } else {
+        currentIndex--;
+        document
+          .getElementById("card" + (currentIndex + 1))
+          .classList.add("hidden");
+
+        createRedoCard(adventuresArray, currentIndex);
+        createInfoUrl(adventuresArray, currentIndex - 1);
+
+        document
+          .getElementById("card" + currentIndex)
+          .classList.remove("hidden");
+      }
     }
-  }
+  }); //End KeyBindings
 
-  function leftSwipe(adventuresArray, currentIndex, card) {
-    if (currentIndex === tempEndDeck - 1) {
-      card.classList.add("slideLeftAnim");
-      //Wait for animation
-      removeCard(card, 500);
-      tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
-    } else {
-      card.classList.add("slideLeftAnim");
-      setTimeout(function () {
-        card.remove();
-      }, 500);
-    }
-  }
-});
+  /**************Links clicked listener ****************/
+  resturantLink.addEventListener("click", function () {
+    getAdventures("adventures/restaurants").then((data) => {
+      console.log(data);
+    });
+  });
+}); //End Async Function for getting cards
 
-async function getAdventures() {
-  const api = "/api/v1/adventures";
+/**************Functions*****************/
+function rightSwipe(adventuresArray, currentIndex, card) {
+  if (currentIndex === tempEndDeck - 1) {
+    card.classList.add("slideRightAnim");
+
+    //Wait for animation
+    removeCard(card, 500);
+    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
+  } else {
+    card.classList.add("slideRightAnim");
+    setTimeout(function () {
+      card.remove();
+    }, 500);
+  }
+}
+
+function leftSwipe(adventuresArray, currentIndex, card) {
+  if (currentIndex === tempEndDeck - 1) {
+    card.classList.add("slideLeftAnim");
+    //Wait for animation
+    removeCard(card, 500);
+    tempEndDeck = maxIndex; //Reset the card number thats at the end of the current card deck
+  } else {
+    card.classList.add("slideLeftAnim");
+    setTimeout(function () {
+      card.remove();
+    }, 500);
+  }
+}
+
+async function getAdventures(address) {
+  const api = "/api/v1/" + address;
   const adventuresResponse = await fetch(api);
   const adventuresdata = adventuresResponse.json();
   return adventuresdata;
