@@ -92,7 +92,7 @@ getAdventures("adventures").then((data) => {
     showFeedMessage(centerSwipeText);
     if (currentIndex == 0) {
       currentIndex = 0;
-      console.log(currentIndex);
+      //console.log(currentIndex);
     } else {
       currentIndex--;
       document
@@ -225,7 +225,7 @@ getAdventures("adventures").then((data) => {
       showFeedMessage(centerSwipeText);
       if (currentIndex == 0) {
         currentIndex = 0;
-        console.log(currentIndex);
+        //console.log(currentIndex);
       } else {
         currentIndex--;
         document
