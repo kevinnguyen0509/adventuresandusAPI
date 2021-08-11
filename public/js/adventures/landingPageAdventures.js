@@ -7,8 +7,16 @@ const nextButton = document.getElementById("next-button");
 const redoButton = document.getElementById("redo-button");
 const infoButton = document.getElementById("info-button-container");
 
+const allAdventures = document.getElementById("allAdventures");
 const resturantLink = document.getElementById("Restaurants");
+const homedecor = document.getElementById("homedecor");
+const daytrips = document.getElementById("daytrips");
+const cooking = document.getElementById("cooking");
+const hiking = document.getElementById("hiking");
 
+const searchButton = document.getElementById("search_icon");
+const searchOne = document.getElementById("search_one");
+const searchTwo = document.getElementById("search_two");
 const rightSwipeText = document.getElementById(
   "swipeFeedBackMessageContainerRight"
 );
@@ -235,14 +243,123 @@ getAdventures("adventures").then((data) => {
   }); //End KeyBindings
 
   /**************Links clicked listener ****************/
-  resturantLink.addEventListener("click", function () {
-    getAdventures("adventures/restaurants").then((data) => {
-      console.log(data);
+  allAdventures.addEventListener("click", function () {
+    startLoading();
+    changeActive(allAdventures);
+    getAdventures("adventures").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
     });
+  });
+
+  resturantLink.addEventListener("click", function () {
+    startLoading();
+    changeActive(resturantLink);
+    getAdventures("adventures/restaurants").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+    });
+  });
+
+  homedecor.addEventListener("click", function () {
+    startLoading();
+    changeActive(homedecor);
+    getAdventures("adventures/homedecor").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+    });
+  });
+
+  daytrips.addEventListener("click", function () {
+    startLoading();
+    changeActive(daytrips);
+    getAdventures("adventures/daytrips").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+    });
+  });
+
+  cooking.addEventListener("click", function () {
+    startLoading();
+    changeActive(cooking);
+    getAdventures("adventures/cooking").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+    });
+  });
+
+  hiking.addEventListener("click", function () {
+    startLoading();
+    changeActive(hiking);
+    getAdventures("adventures/hiking").then((data) => {
+      finishLoading();
+      currentIndex = 0;
+      maxIndex = 10;
+      adventuresArray = [];
+      adventuresArray = shuffle(data.adventures);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+    });
+  });
+
+  /***************Search bar functions********************/
+  searchButton.addEventListener("click", function () {
+    console.log(searchOne.value, searchTwo.value);
   });
 }); //End Async Function for getting cards
 
 /**************Functions*****************/
+function changeActive(currentActive) {
+  var liLinks = document.querySelectorAll(".Categories");
+  for (let i = 0; i < liLinks.length; i++) {
+    liLinks[i].classList.remove("active");
+  }
+
+  currentActive.classList.add("active");
+}
 function rightSwipe(adventuresArray, currentIndex, card) {
   if (currentIndex === tempEndDeck - 1) {
     card.classList.add("slideRightAnim");

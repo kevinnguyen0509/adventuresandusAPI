@@ -8,22 +8,22 @@ block content
             .content-section-bottom
                 .content-section-left 
                     ul.list-container 
-                        li.active 
+                        li.active.Categories#allAdventures 
                             p All Adventures 
                             <i class="flaticon-browsing sidebar-icon"></i>
-                        li#Restaurants     
+                        li#Restaurants.Categories      
                             p Restaurants
                             <i class="flaticon-recipe-book sidebar-icon"></i>  
-                        li 
+                        li#homedecor.Categories  
                             p Home/Decor
                             <i class="flaticon-relax sidebar-icon"></i>        
-                        li     
+                        li#daytrips.Categories      
                             p Activies/places
                             <i class="flaticon-car sidebar-icon"></i>    
-                        li     
+                        li#cooking.Categories      
                             p Recipe Ideas!
                             <i class="flaticon-fork sidebar-icon"></i>   
-                        li     
+                        li#hiking.Categories      
                             p Hikes!
                             <i class="flaticon-hiking sidebar-icon"></i>  
                     h3#recently-added-title Recently Added
@@ -40,12 +40,12 @@ block content
                             img(src="img/assets/cooking.jpg" class="right-section-image")                   
                     .bottom-right-section
                         .bottom-title 
-                            h3 Use The LEFT And RIGHT Keys To Swipe!
+                            h3 Use The LEFT And RIGHT Keys To Swipe Too!
                        
                         include util/loading 
                         //loading bar
                         .bottom-content#bottom-content
-                            #swipeFeedBackMessageContainerRight.test
+                            #swipeFeedBackMessageContainerRight
                                 h3 Yeah!
 
                             #swipeFeedBackMessageContainerLeft
