@@ -347,7 +347,24 @@ getAdventures("adventures").then((data) => {
 
   /***************Search bar functions********************/
   searchButton.addEventListener("click", function () {
-    console.log(searchOne.value, searchTwo.value);
+    startLoading();
+    let searchContentArray = searchOne.value.split(" ");
+    let searchQuery = "";
+    let location = searchTwo.value;
+    for (let i = 0; i < searchContentArray.length; i++) {
+      searchQuery = searchQuery + "-" + searchContentArray[i];
+    }
+    searchQuery = searchQuery.substring(1);
+    getSearch(searchQuery, location).then((data) => {
+      adventuresArray = [];
+      adventuresArray = shuffle(data.data);
+      var cardsDeck = document.querySelectorAll(".bottom-content-container");
+      for (let i = 0; i < cardsDeck.length; i++) {
+        cardsDeck[i].remove();
+      }
+      createInitialDeck(adventuresArray);
+      finishLoading();
+    });
   });
 }); //End Async Function for getting cards
 
@@ -391,6 +408,13 @@ function leftSwipe(adventuresArray, currentIndex, card) {
 
 async function getAdventures(address) {
   const api = "/api/v1/" + address;
+  const adventuresResponse = await fetch(api);
+  const adventuresdata = adventuresResponse.json();
+  return adventuresdata;
+}
+
+async function getSearch(searchQuery, location = "") {
+  const api = `/api/v1/adventures/search?search=${searchQuery}&location=${location}`;
   const adventuresResponse = await fetch(api);
   const adventuresdata = adventuresResponse.json();
   return adventuresdata;

@@ -23,7 +23,7 @@ exports.searchAdventure = async (req, res) => {
     //$all $in
 
     const queryString = req.query.search;
-    const querySearchArray = queryString.split(",");
+    const querySearchArray = queryString.split("-");
     console.log(querySearchArray);
 
     //const searchQuery = ["Restaurant"];
