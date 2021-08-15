@@ -1,4 +1,4 @@
-@media only screen and (max-width: 1510px) and (max-height: 965px) {
+@media only screen and (max-width: 1510px) and (max-height: 968px) {
   body {
     height: 900px;
   }
@@ -29,11 +29,11 @@
     height: 100.5vh;
   }
   .recentlyAddedContainer {
-    height: 52%;
+    height: 46%;
   }
 }
 
-@media only screen and (max-width: 1371px) {
+@media only screen and (max-width: 1480px) {
   .container {
     width: 100%;
     padding: 50px 0px;
@@ -62,6 +62,29 @@
   }
   .recentlyAddedContainer {
     height: 50%;
+  }
+}
+
+@media only screen and (max-width: 1371px) and (max-height: 770px) {
+  .container {
+    height: 140vh;
+    padding: 50px 0px;
+  }
+  .bottom-content {
+    height: 88vh;
+  }
+  .bottom-content-container {
+    height: 73vh;
+  }
+  .content-section-left {
+    height: 125.5vh;
+  }
+  .content-section-right {
+    height: 125.5vh;
+  }
+
+  .recentlyAddedContainer {
+    height: 40%;
   }
 }
 
