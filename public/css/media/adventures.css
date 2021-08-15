@@ -122,3 +122,9 @@
     padding: 10px 10px;
   }
 }
+
+@media only screen and (max-height: 650px) {
+  .recentlyAddedContainer {
+    height: 28%;
+  }
+}
