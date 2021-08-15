@@ -1,0 +1,94 @@
+@media only screen and (max-width: 1510px) and (max-height: 965px) {
+  body {
+    height: 900px;
+  }
+  .container {
+    width: 100%;
+    padding: 50px 0px;
+  }
+
+  .content-section {
+    flex-basis: 80%;
+    height: 140vh;
+  }
+
+  .content-section-left {
+    height: 133.5vh;
+    width: 35%;
+  }
+
+  .bottom-content-container {
+    height: 85vh;
+  }
+
+  .image-content-container {
+    height: 77vh;
+  }
+
+  .bottom-content {
+    height: 100.5vh;
+  }
+  .recentlyAddedContainer {
+    height: 52%;
+  }
+}
+
+@media only screen and (max-width: 1371px) {
+  .container {
+    width: 100%;
+    padding: 50px 0px;
+  }
+
+  .content-section {
+    flex-basis: 80%;
+    height: 120vh;
+  }
+
+  .content-section-left {
+    height: 114vh;
+    width: 35%;
+  }
+
+  .bottom-content-container {
+    height: 70vh;
+  }
+
+  .image-content-container {
+    height: 62vh;
+  }
+
+  .bottom-content {
+    height: 80vh;
+  }
+  .recentlyAddedContainer {
+    height: 50%;
+  }
+}
+
+@media only screen and (max-width: 1185px) {
+  .nav__el {
+    padding: 10px 40px;
+  }
+}
+
+@media only screen and (max-width: 1060px) {
+  .nav__el {
+    padding: 10px 30px;
+  }
+}
+
+@media only screen and (max-width: 965px) {
+  .nav__el {
+    padding: 10px 20px;
+  }
+}
+
+@media only screen and (max-width: 810px) {
+  .content-section {
+    flex-basis: 90%;
+  }
+
+  .nav__el {
+    padding: 10px 10px;
+  }
+}
