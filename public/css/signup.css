@@ -1,0 +1,30 @@
+.signup-container {
+  width: 500px;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 5px;
+  padding: 0px 50px;
+  box-shadow: 5px 5px 10px rgba(17, 17, 17, 0.8);
+}
+
+form {
+  display: flex;
+  flex-direction: column; /* change this to row instead of 'column' */
+  flex-wrap: wrap; /* added flex-wrap */
+}
+.input-field-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.signup-label-container {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 49%;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.password_icon {
+  margin-left: 1%;
+}

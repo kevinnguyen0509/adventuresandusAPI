@@ -1,4 +1,27 @@
 extends base
 
 block content 
-    h1 This is the signup page
+  .content
+    .blur
+      .right-container  
+        .signup-container
+          form(action="#" method="POST")
+            .login-icon-container
+              img(src='img/favicon.png' id="login-cover-icon")
+              h1(id="login-title") Swipegestion
+            .input-field-container
+                .signup-label-container
+                    <i class="flaticon-user" id="login_icon"></i>
+                    input(type="text" name="username" class="form_input" placeholder="Username")
+            
+                .signup-label-container
+                    <i class="flaticon-lock password_icon" id="login_icon"></i>
+                    input(type="password" name="username" class="form_input" placeholder="Password") 
+                
+                .signup-label-container
+                    <i class="flaticon-email" id="login_icon"></i>
+                    input(type="email" name="email" class="form_input" placeholder="Email") 
+
+                .login-button-container
+                    p Forgot Password
+                    button(type="submit" id="login-button") Login
